@@ -49,7 +49,7 @@ public class HibernateConfiguration {
         hibernateProperties.setProperty(
           "hibernate.hbm2ddl.auto", "create-drop");
         hibernateProperties.setProperty(
-          "hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+          "hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
  
         return hibernateProperties;
     }}
