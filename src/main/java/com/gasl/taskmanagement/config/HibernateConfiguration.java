@@ -29,7 +29,7 @@ public class HibernateConfiguration {
     public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/admin");
+        dataSource.setUrl("jdbc:mysql://127.0.0.1:3308/admin");
         dataSource.setUsername("root");
         dataSource.setPassword("");
  
@@ -47,7 +47,7 @@ public class HibernateConfiguration {
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
-          "hibernate.hbm2ddl.auto", "create-drop");
+          "hibernate.hbm2ddl.auto", "validate");
         hibernateProperties.setProperty(
           "hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
  
