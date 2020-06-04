@@ -1,5 +1,7 @@
 package com.gasl.taskmanagement.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +20,8 @@ import com.gasl.taskmanagement.vo.AuthenticationResponse;
 
 @RestController
 public class UsersController {
+	
+	Logger logger = LoggerFactory.getLogger(UsersController.class);
 
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -31,6 +35,8 @@ public class UsersController {
 
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> getAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
+		
+		logger.info( "EXECFLOW -> UsersController -> getAuthenticationToken");
 
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -48,6 +54,8 @@ public class UsersController {
 	}
 	@PostMapping("/createnewuser")
 	public ResponseEntity<?> createNewUser(@RequestBody Users userInformation) {
+		logger.info( "EXECFLOW -> UsersController -> createNewUser");
+		
 		userDetailsService.createNewUser(userInformation);
 		return ResponseEntity.ok("User successfully created");
 	}
