@@ -5,10 +5,10 @@ import java.util.Date;
 public class TaskFilters {
 	private String taskName;
 	private Date createdTime;
-	private Date dueDate;
+	private Integer dueDate;
 	private String status;
 	private String label;
-	private Date completedDate;
+	private Integer completedDate;
 	private Integer priority;
 	private Integer userId;
 
@@ -36,14 +36,6 @@ public class TaskFilters {
 		this.createdTime = createdTime;
 	}
 
-	public Date getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
-
 	public String getStatus() {
 		return status;
 	}
@@ -52,11 +44,19 @@ public class TaskFilters {
 		this.status = status;
 	}
 
-	public Date getCompletedDate() {
+	public Integer getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Integer dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public Integer getCompletedDate() {
 		return completedDate;
 	}
 
-	public void setCompletedDate(Date completedDate) {
+	public void setCompletedDate(Integer completedDate) {
 		this.completedDate = completedDate;
 	}
 

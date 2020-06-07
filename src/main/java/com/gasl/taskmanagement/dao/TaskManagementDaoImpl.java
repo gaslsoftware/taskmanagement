@@ -72,7 +72,14 @@ public class TaskManagementDaoImpl implements TaskManagementDao {
             queryMain += " ORDER BY createdTime DESC";
         } else if (filters.getDueDate() != null) {
             filterCount++;
-            queryMain += " ORDER BY dueDate DESC";
+            if(filters.getDueDate() == 1) {
+                queryMain += " ORDER BY dueDate ASC";
+            }
+            else
+            {
+                queryMain += " ORDER BY dueDate DESC";
+            }
+
         } else if (filters.getCompletedDate() != null) {
             filterCount++;
             queryMain += " ORDER BY CompletedDate DESC";
