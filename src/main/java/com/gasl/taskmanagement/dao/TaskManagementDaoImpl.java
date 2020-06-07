@@ -56,6 +56,10 @@ public class TaskManagementDaoImpl implements TaskManagementDao {
             filterCount++;
             queryMain += "tk.priority ='" + filters.getPriority() + "' AND";
         }
+        if(filters.getUserId() != null) {
+        	filterCount++;
+            queryMain += "tk.userId ='" + filters.getUserId()+ "' AND";
+        }
 
         if (filterCount != 0) {
             queryMain = removeLastChar(queryMain, 3);

@@ -11,11 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gasl.taskmanagement.bo.TaskManagementBo;
+import com.gasl.taskmanagement.bo.UsersDetailsService;
 import com.gasl.taskmanagement.config.HibernateConfiguration;
 import com.gasl.taskmanagement.dto.Tasks;
+import com.gasl.taskmanagement.dto.Users;
+import com.gasl.taskmanagement.utils.JwtUtil;
 import com.gasl.taskmanagement.vo.RequestResponse;
 import com.gasl.taskmanagement.vo.TaskFilters;
 
@@ -26,6 +30,13 @@ public class TaskManagementController {
 
     @Autowired
     private TaskManagementBo taskManagementBO;
+    
+    @Autowired
+    private JwtUtil jwtUtil;
+    
+	
+	@Autowired
+	UsersDetailsService userDetailsService;
 
     @GetMapping("/tester")
     public String tester() {
@@ -35,7 +46,7 @@ public class TaskManagementController {
     }
 
     @PostMapping("/createnewtask")
-    public RequestResponse createNewTask(@RequestBody Tasks task) {
+    public RequestResponse createNewTask(@RequestBody Tasks task,@RequestHeader("Authorization") String auth ) {
     	
     	logger.info( "EXECFLOW -> TaskManagementController -> createNewTask");
     	
@@ -44,6 +55,12 @@ public class TaskManagementController {
 		}
 		task.setUpdatedTime(new Date());
 		Map<String, Object> model = new HashMap<String, Object>();
+		
+		String jwtToken = auth.substring(7);
+        String userName = jwtUtil.extractUsername(jwtToken);
+        Users user = userDetailsService.getUserByUserName(userName);
+        task.setUserId(user.getUserId());
+        
         String taskId = taskManagementBO.createNewTask(task);
         model.put("taskId", taskId);
         RequestResponse requestResponse = new RequestResponse();
@@ -61,7 +78,7 @@ public class TaskManagementController {
     }
 
     @PostMapping("/deletetask")
-    public RequestResponse deleteTask(@RequestBody Tasks task) {
+    public RequestResponse deleteTask(@RequestBody Tasks task ) {
     	
     	logger.info( "EXECFLOW -> TaskManagementController -> deleteTask");
     	
@@ -83,11 +100,18 @@ public class TaskManagementController {
 	}
 
     @PostMapping("/fetchtasks")
-    public RequestResponse fetchTasks(@RequestBody TaskFilters filters) {
+    public RequestResponse fetchTasks(@RequestBody TaskFilters filters,@RequestHeader("Authorization") String auth) {
+    	
+    	
     	
     	logger.info( "EXECFLOW -> TaskManagementController -> fetchTasks");
     	
         Map<String, Object> model = new HashMap<String, Object>();
+        String jwtToken = auth.substring(7);
+        String userName = jwtUtil.extractUsername(jwtToken);
+        Users user = userDetailsService.getUserByUserName(userName);
+        
+        filters.setUserId(user.getUserId());
         List<Tasks> tasks = taskManagementBO.fetchTasks(filters);
 		RequestResponse requestResponse = new RequestResponse();
 		if(tasks == null)

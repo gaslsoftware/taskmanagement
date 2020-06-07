@@ -39,5 +39,14 @@ public class UsersDetailsService implements UserDetailsService {
 		}
 		return usersDao.createNewUser(user);
 	}
+	
+	public Users getUserByUserName (String username) {
+		Users user = usersDao.loadByUsername(username);
+		if (user == null) {
+			throw new UsernameNotFoundException(username);
+		}
+		return user;
+	}
+
 
 }

@@ -1,5 +1,8 @@
 package com.gasl.taskmanagement.controller;
 
+import java.util.ArrayList;
+
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import com.gasl.taskmanagement.dto.Users;
 import com.gasl.taskmanagement.utils.JwtUtil;
 import com.gasl.taskmanagement.vo.AuthenticationRequest;
 import com.gasl.taskmanagement.vo.AuthenticationResponse;
+import com.gasl.taskmanagement.vo.RequestResponse;
 
 @RestController
 public class UsersController {
@@ -31,6 +35,7 @@ public class UsersController {
 	
 	@Autowired
 	UsersDetailsService userDetailsService;
+	
 	
 
 	@PostMapping("/authenticate")
@@ -54,10 +59,31 @@ public class UsersController {
 	}
 	@PostMapping("/createnewuser")
 	public ResponseEntity<?> createNewUser(@RequestBody Users userInformation) {
-		logger.info( "EXECFLOW -> UsersController -> createNewUser");
-		
-		userDetailsService.createNewUser(userInformation);
-		return ResponseEntity.ok("User successfully created");
+		RequestResponse requestResponse = new RequestResponse();
+		try {
+
+			logger.info("EXECFLOW -> UsersController -> createNewUser");
+
+			userDetailsService.createNewUser(userInformation);
+			requestResponse.setModel(new ArrayList<>());
+			requestResponse.setHasError(false);
+			requestResponse.setMessage("User successfully created");
+			return ResponseEntity.ok(requestResponse);
+
+		} catch (ConstraintViolationException e) {
+			e.printStackTrace();
+			requestResponse.setModel(new ArrayList<>());
+			requestResponse.setHasError(true);
+			requestResponse.setMessage("Duplicate username");
+			return ResponseEntity.ok(requestResponse);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			requestResponse.setModel(new ArrayList<>());
+			requestResponse.setHasError(true);
+			requestResponse.setMessage("Something went wrong");
+			return ResponseEntity.ok(requestResponse);
+		}
 	}
 
 }
