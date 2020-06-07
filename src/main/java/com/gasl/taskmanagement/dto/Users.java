@@ -25,7 +25,7 @@ public class Users {
 	private String emailAddress;
 	
 	@Column(name = "mobile_number")
-	private Integer mobileNumber;
+	private String mobileNumber;
 
 	public Integer getUserId() {
 		return userId;
@@ -59,11 +59,11 @@ public class Users {
 		this.emailAddress = emailAddress;
 	}
 
-	public Integer getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
 
-	public void setMobileNumber(Integer mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 

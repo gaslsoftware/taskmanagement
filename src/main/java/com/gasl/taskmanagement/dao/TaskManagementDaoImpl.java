@@ -42,30 +42,29 @@ public class TaskManagementDaoImpl implements TaskManagementDao {
         int filterCount = 0;
         if (filters.getTaskName() != null) {
             filterCount++;
-            queryMain += " tk.taskName LIKE '%" + filters.getTaskName() + "%' AND";
+            queryMain += "tk.taskName LIKE '%" + filters.getTaskName() + "%' AND ";
         }
         if (filters.getStatus() != null) {
             filterCount++;
-           // queryMain += "tk.status ='" + filters.getStatus() + "'AND";
-            queryMain += " tk.status LIKE '%" + filters.getStatus() + "%' AND";
+            queryMain += "tk.status ='" + filters.getStatus() + "' AND ";
         }
         if (filters.getLabel() != null) {
             filterCount++;
-            queryMain += " tk.label ='" + filters.getLabel() + "' AND";
+            queryMain += "tk.label ='" + filters.getLabel() + "' AND ";
         }
         if (filters.getPriority() != null) {
             filterCount++;
-            queryMain += " tk.priority ='" + filters.getPriority() + "' AND";
+            queryMain += "tk.priority ='" + filters.getPriority() + "' AND ";
         }
         if(filters.getUserId() != null) {
         	filterCount++;
-            queryMain += " tk.userId ='" + filters.getUserId()+ "' AND";
+            queryMain += "tk.userId ='" + filters.getUserId()+ "' AND ";
         }
 
         if (filterCount != 0) {
-            queryMain = removeLastChar(queryMain, 3);
+            queryMain = removeLastChar(queryMain, 4);
         } else {
-            queryMain = removeLastChar(queryMain, 6);
+            queryMain = removeLastChar(queryMain, 7);
         }
         if (filters.getCreatedTime() != null) {
             filterCount++;
