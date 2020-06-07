@@ -1,10 +1,10 @@
 url : http://localhost:8080/createnewuser - POST
 body : {
-	"userName": "saideep1",
-	"password": "Welcome1",
-	"emailAddress": "saideep@gasl.com",
-	"phoneNumber": "454223423423"
-}
+         "userName": "shiva",
+         "password": "Welcome1",
+         "emailAddress": "shiva@gasl.com",
+         "mobileNumber": "454223"
+       }
 
 url : http://localhost:8080/authenticate - POST
 body : {

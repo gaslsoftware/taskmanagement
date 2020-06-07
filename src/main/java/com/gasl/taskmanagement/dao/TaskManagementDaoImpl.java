@@ -38,7 +38,7 @@ public class TaskManagementDaoImpl implements TaskManagementDao {
 
     @Override
     public List<Tasks> getTasks(TaskFilters filters) {
-        String queryMain = "from Tasks tk where ";
+        String queryMain = " from Tasks tk where ";
         int filterCount = 0;
         if (filters.getTaskName() != null) {
             filterCount++;
